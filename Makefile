@@ -14,8 +14,7 @@ SRC      := src/sqlite_test.cpp
    # $(wildcard src/*.cpp)         \
 
 OBJECTS  := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
-DEPENDENCIES \
-         := $(OBJECTS:.o=.d)
+DEPENDENCIES := $(OBJECTS:.o=.d)
 
 
 all: build $(APP_DIR)/$(TARGET)
@@ -27,9 +26,9 @@ $(OBJ_DIR)/%.o: %.cpp
 $(APP_DIR)/$(TARGET): $(OBJECTS)
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) -o $(APP_DIR)/$(TARGET) $^ $(LDFLAGS)
-#
-# -include $(DEPENDENCIES)
-#
+
+-include $(DEPENDENCIES)
+
 .PHONY: all build clean debug release info run 
 
 run: 
@@ -55,4 +54,4 @@ info:
 	@echo "[*] Sources:         ${SRC}         "
 	@echo "[*] Objects:         ${OBJECTS}     "
 	@echo "[*] Dependencies:    ${DEPENDENCIES}"
-
+ 
