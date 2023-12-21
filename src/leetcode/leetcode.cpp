@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
     char *sqlinsert;
     char *sqlselect;
 
-    rc = sqlite3_open("~/.config/leetcodemanager/LeetCodeProblems.db", &db);
+    rc = sqlite3_open("/home/cheng-yen/.config/leetcodemanager/LeetCodeProblems.db", &db);
 
     if( rc ) {
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
@@ -35,10 +35,10 @@ int main(int argc, char* argv[]) {
     }
 
     sqlcreate = "CREATE TABLE `LeetCodeProblems` (" \ 
-        "`ID` INT," \
-        "`difficulty` ENUM('easy', 'medium', 'hard'),"\
-        "`title` VARCHAR,"\
-        "`titleSlug` VARCHAR,"\
+        "`ID`           INT," \
+        "`difficulty`   TEXT CHECK( difficulty IN ('easy', 'medium', 'hard')),"\
+        "`title`        TEXT,"\
+        "`titleSlug`    TEXT,"\
         "PRIMARY KEY (`ID`))";
 
     /* Execute SQL statement */
