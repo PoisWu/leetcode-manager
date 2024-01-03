@@ -9,8 +9,8 @@ class Database{
 // private:
 public:
     sqlite3 *db;
-    static const string db_path;
-    static const string leetcodecurl;
+    static const char* db_path;
+    static const char* leetcodeurl;
 
 
 
@@ -30,6 +30,6 @@ public:
     string getTitle(int frontid);
 
 
-}
+};
 
 # endif

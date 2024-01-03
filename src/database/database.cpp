@@ -11,21 +11,24 @@
 
 using namespace std;
 
-const string Database::db_path = "/home/cheng-yen/.config/leetcodemanager/LeetCodeProblems.db";
-const string Database::leetcodeurl = "https://leetcode.com/graphql";
+const char* Database::db_path = "/home/cheng-yen/.config/leetcodemanager/LeetCodeProblems.db";
+const char* Database::leetcodeurl = "https://leetcode.com/graphql";
 
 Database::Database(){
-        int rc = sqlite3_open(this.db_path); 
+        int rc = sqlite3_open(this->db_path, &this->db); 
         if(rc) {
-            fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(this.db));
-            return(0);
+            fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(this->db));
+            sqlite3_close(this -> db);
+            throw "Can't open database";
+
+            // return (0);
         } else {
             fprintf(stderr, "Opened database successfully\n");
         }
 };
 
 Database::~Database(){
-    sqlite3_close(this.db);
+    sqlite3_close(this -> db);
 }
 int Database::callback(void *NotUsed, int argc, char **argv, char **azColName) {
     int i;
@@ -37,14 +40,15 @@ int Database::callback(void *NotUsed, int argc, char **argv, char **azColName) {
 }
 
 void Database::createTable(){
-    const string sqlcreate = "CREATE TABLE `LeetCodeProblems` (" \ 
+    const char* sqlcreate = "CREATE TABLE `LeetCodeProblems` (" \ 
         "`ID`           INT," \
         "`difficulty`   TEXT CHECK( difficulty IN ('easy', 'medium', 'hard')),"\
         "`title`        TEXT,"\
         "`titleSlug`    TEXT,"\
         "PRIMARY KEY (`ID`))";
-    int zErrMsg = 0;
-    int rc = sqlite3_exec(this.db, sqlcreate, this.callback, 0, &zErrMsg);
+    char *zErrMsg = 0;
+
+    int rc = sqlite3_exec(this->db, sqlcreate, this->callback, 0, &zErrMsg);
     if( rc != SQLITE_OK ){
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
         sqlite3_free(zErrMsg);

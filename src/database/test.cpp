@@ -1,6 +1,5 @@
-
 # include "database.h"
-int main(int argc, char* argv[]) {
+int main() {
     Database db;
     db.createTable();
 }
