@@ -8,10 +8,9 @@ APP_DIR  := $(BUILD)/apps
 TARGET   := main
 # INCLUDE  := -Iinclude/
 INCLUDE  := 
-SRC      := src/sqlite_test.cpp
-   # $(wildcard src/module1/*.cpp) \
-   # $(wildcard src/module2/*.cpp) \
-   # $(wildcard src/*.cpp)         \
+SRC      := $(wildcard src/database/*.cpp) 
+    		# $(wildcard src/module2/*.cpp) \
+    		# $(wildcard src/*.cpp)         \
 
 OBJECTS  := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 DEPENDENCIES := $(OBJECTS:.o=.d)
