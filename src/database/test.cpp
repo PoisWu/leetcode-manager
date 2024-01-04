@@ -1,5 +1,6 @@
-# include "database.h"
-int main() {
+#include "database.h"
+int main()
+{
     Database db;
     db.createTable();
 }
