@@ -33,6 +33,7 @@ Database::~Database()
 {
     sqlite3_close(this->db);
 }
+
 int Database::callback(void *NotUsed, int argc, char **argv, char **azColName)
 {
     int i;
@@ -42,6 +43,8 @@ int Database::callback(void *NotUsed, int argc, char **argv, char **azColName)
     printf("\n");
     return 0;
 }
+
+void Database::downloadProblems() {}
 
 void Database::createTable()
 {
