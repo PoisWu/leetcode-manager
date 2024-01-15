@@ -17,7 +17,7 @@ set(CMAKE_CXX_EXTENSIONS OFF) #...without compiler extensions like gnu++11
 
 add_library(build_settings INTERFACE)
 
-target_include_directories(build_settings INTERFACE include)
+target_include_directories(build_settings INTERFACE include libs)
 
 # include_directories(include/databse)
 

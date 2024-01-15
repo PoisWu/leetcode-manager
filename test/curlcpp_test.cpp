@@ -1,20 +1,10 @@
-/**
- * \file
- * Setting request options using iterators to custom container of curlpp
- * options.
- *
- */
-
-#include <vector>
-
 #include <curlpp/Easy.hpp>
-#include <curlpp/Options.hpp>
+#include <curlpp/Option.hpp>
 #include <curlpp/cURLpp.hpp>
 
+using namespace std;
 
-using namespace curlpp::options;
-
-int main(int, char **)
+int main()
 {
     try {
         // That's all that is needed to do cleanup of used resources (RAII
@@ -24,21 +14,13 @@ int main(int, char **)
         // Our request to be sent.
         curlpp::Easy myRequest;
 
-        // Container of our choice with pointers to curlpp options.
-        std::vector<curlpp::OptionBase *> options;
-
-        options.push_back(new Url("http://example.com"));
-        options.push_back(new Port(80));
-
-        // Set all options in range to the Easy handle.
-        myRequest.setOpt(options.begin(), options.end());
+        // Set the URL.
+        myRequest.setOpt<Url>("http://info.cern.ch");
 
         // Send request and get a result.
         // By default the result goes to standard output.
         myRequest.perform();
-
     }
-
 
     catch (curlpp::RuntimeError &e) {
         std::cout << e.what() << std::endl;
@@ -47,6 +29,5 @@ int main(int, char **)
     catch (curlpp::LogicError &e) {
         std::cout << e.what() << std::endl;
     }
-
     return 0;
 }
